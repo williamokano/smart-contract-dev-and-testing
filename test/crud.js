@@ -50,4 +50,14 @@ contract("Crud", function (/* accounts */) {
     assert.fail('Should not reach here bro')
   })
 
+  it('should fail to destroy non-existing user', async () => {
+    try {
+      await crud.read(999999)
+    } catch (error) {
+      return assert.isTrue(error.message.includes('User does not exist'))
+    }
+
+    assert.fail('Should not reach here bro')
+  })
+
 })
