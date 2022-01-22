@@ -17,7 +17,6 @@ contract("Crud", function (/* accounts */) {
     await crud.create('William')
     const user = await crud.read(1)
     
-    console.log(user)
     assert.equal(user[0].toNumber(), 1, 'Wrong id')
     assert.equal(user[1], 'William', 'Name was not set correctly')
   })
