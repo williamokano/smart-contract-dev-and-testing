@@ -1,14 +1,19 @@
 const AdvancedStorage = artifacts.require("AdvancedStorage");
 
 contract("AdvancedStorage", function (/* accounts */) {
+
+  let advancedStorage
+
+  before(async () => {
+    advancedStorage = await AdvancedStorage.deployed()
+  })
+
   it('should deploy correctly', async function () {
     await AdvancedStorage.deployed()
     return assert.isTrue(true)
   })
 
   it('should add an elemento to ids array', async () => {
-    const advancedStorage = await AdvancedStorage.deployed()
-
     await advancedStorage.add(1)
     const value = await advancedStorage.ids(0)
 
@@ -16,8 +21,6 @@ contract("AdvancedStorage", function (/* accounts */) {
   })
 
   it('should get an element of the ids array', async () => {
-    const advancedStorage = await AdvancedStorage.deployed()
-
     await advancedStorage.add(20)
 
     const value = await advancedStorage.get(1)
@@ -26,12 +29,15 @@ contract("AdvancedStorage", function (/* accounts */) {
   })
 
   it('should get all elements of the ids array', async () => {
-    const advancedStorage = await AdvancedStorage.deployed()
-
     const rawIds = await advancedStorage.getAll()
     const ids = rawIds.map(id => id.toNumber())
 
     return assert.deepEqual(ids, [1, 20], 'wrong value bro')
+  })
+
+  it('should return the length of the elements array', async () => {
+    const length = await advancedStorage.length()
+    assert.equal(length, 2, 'tamanho não é igual bro')
   })
 
 })
